@@ -21,3 +21,6 @@ Package `sessions` provides minimalist Go sessions, backed by cookie or database
 * Gorilla requires `gorilla/context` so all handlers must be wrapped in `context.ClearHandler` to avoid memory leaks.
 * Gorilla's `Store` interface is surprising. `New` and `Get` can both possibly return a new session, a field check is needed. Some use cases expect developers to [ignore an error](https://github.com/gorilla/sessions/blob/master/doc.go#L32). `Destroy` isn't provided.
 
+## License
+
+[MIT License](LICENSE)

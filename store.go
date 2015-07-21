@@ -72,7 +72,7 @@ func (s *CookieStore) Save(w http.ResponseWriter, session *Session) error {
 // Destroy deletes the Session by replacing the session cookie with an expired
 // session cookie of the same name.
 func (s *CookieStore) Destroy(w http.ResponseWriter, session *Session) {
-	http.SetCookie(w, newCookie(session.Name(), "", &Config{MaxAge: -1}))
+	http.SetCookie(w, newCookie(session.Name(), "", &Config{MaxAge: -1, Path: s.Config.Path}))
 }
 
 // newCookie returns a new http.Cookie with the given name, value, and

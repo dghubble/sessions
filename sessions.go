@@ -52,7 +52,8 @@ func (s *Session) Save(w http.ResponseWriter) error {
 	return s.store.Save(w, s)
 }
 
-// Destroy destroys the session. Identical to calling store.Destroy(w,session).
+// Destroy destroys the session. Identical to calling
+// store.Destroy(w, session.name).
 func (s *Session) Destroy(w http.ResponseWriter) {
-	s.store.Destroy(w, s)
+	s.store.Destroy(w, s.name)
 }

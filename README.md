@@ -6,10 +6,10 @@ Package `sessions` provides minimalist Go sessions, backed by cookie or database
 ### Features
 
 * `Store` provides a predicatable interface for dealing with *individual* sessions.
-    * `New` returns a new empty `Session`. 
+    * `New` returns a new named `Session`. 
     * `Get` returns the named `Session` from the `http.Request` iff it was correctly verified and decoded. Otherwise the error is non-nil.
-    * `Save` encodes and signs Session.Value data into the persistent `Store`
-    * `Destroy` removes the underlying session cookie.
+    * `Save` encodes and signs Session.Value data.
+    * `Destroy` removes (expires) the session cookie of a given name.
 * Each `Session` provides `Save` and `Destroy` convenience methods.
 * Provides `CookieStore` for managing client-side secure cookies.
 * Extensible for custom session database backends.

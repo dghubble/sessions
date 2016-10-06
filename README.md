@@ -1,7 +1,7 @@
 
-# Sessions
+# Sessions [![GoDoc](https://godoc.org/github.com/dghubble/sessions?status.png)](https://godoc.org/github.com/dghubble/sessions)
 
-Package `sessions` provides minimalist Go sessions, backed by cookie or database stores.
+Package `sessions` provides minimalist Go sessions, backed by `securecookie` or database stores.
 
 ### Features
 
@@ -13,12 +13,12 @@ Package `sessions` provides minimalist Go sessions, backed by cookie or database
 * Each `Session` provides `Save` and `Destroy` convenience methods.
 * Provides `CookieStore` for managing client-side secure cookies.
 * Extensible for custom session database backends.
-* No `gorilla/context` dependency. No need for contexts. No need to wrap handlers in `context.ClearHandler`.
 
 ### Differences from gorilla/sessions
 
 * Gorilla stores a context map of Requests to Sessions to abstract multiple sessions. `dghubble/sessions` provides individual sessions, leaving multiple sessions to a `multisessions` package. No Registry is needed.
-* Gorilla requires `gorilla/context` so all handlers must be wrapped in `context.ClearHandler` to avoid memory leaks.
+* Gorilla has a depedency on `gorilla/context`, a non-standard context.
+* Gorilla requires all handlers be wrapped in `context.ClearHandler` to avoid memory leaks.
 * Gorilla's `Store` interface is surprising. `New` and `Get` can both possibly return a new session, a field check is needed. Some use cases expect developers to [ignore an error](https://github.com/gorilla/sessions/blob/master/doc.go#L32). `Destroy` isn't provided.
 
 ## License

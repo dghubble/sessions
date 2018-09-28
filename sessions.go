@@ -21,6 +21,8 @@ type Config struct {
 	HTTPOnly bool
 	// cookie may only be transferred over HTTPS
 	Secure bool
+	// Controls SameSite attribute for session cookie
+	SameSite http.SameSite
 }
 
 // Session represents Values state which  a named bundle of maintained web state

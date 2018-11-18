@@ -13,6 +13,16 @@ Package `sessions` provides minimalist Go sessions, backed by `securecookie` or 
 * Provides `CookieStore` for managing client-side secure cookies.
 * Extensible for custom session database backends.
 
+## Install
+
+```
+go get github.com/dghubble/sessions
+```
+
+## Documentation
+
+Read [GoDoc](https://godoc.org/github.com/dghubble/sessions)
+
 ### Differences from gorilla/sessions
 
 * Gorilla stores a context map of Requests to Sessions to abstract multiple sessions. `dghubble/sessions` provides individual sessions, leaving multiple sessions to a `multisessions` package. No Registry is needed.

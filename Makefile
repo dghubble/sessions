@@ -1,9 +1,9 @@
 .PHONY: all
-all: test vet lint fmtcheck
+all: test vet lint fmt
 
 .PHONY: test
 test:
-	@go test ./...
+	@go test ./... -cover
 
 .PHONY: vet
 vet:
@@ -15,9 +15,5 @@ lint:
 
 .PHONY: fmt
 fmt:
-	@gofmt -l -s -w .
+	@test -z $$(go fmt ./...)
 
-.PHONY: fmtcheck
-fmtcheck:
-	@gofmt -l -s .
-	@test -z $$(gofmt -l -s .)

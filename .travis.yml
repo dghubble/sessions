@@ -6,3 +6,5 @@ install:
   - go get -v -t .
 script:
   - make
+notifications:
+  email: change

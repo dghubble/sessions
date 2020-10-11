@@ -1,11 +1,11 @@
-# sessions [![Build Status](https://travis-ci.org/dghubble/sessions.svg?branch=master)](https://travis-ci.org/dghubble/sessions) [![GoDoc](https://godoc.org/github.com/dghubble/sessions?status.svg)](https://godoc.org/github.com/dghubble/sessions)
+# sessions [![Build Status](https://github.com/dghubble/sessions/workflows/test/badge.svg)](https://github.com/dghubble/sessions/actions?query=workflow%3Atest+branch%3Amaster) [![GoDoc](https://godoc.org/github.com/dghubble/sessions?status.svg)](https://godoc.org/github.com/dghubble/sessions)
 
 Package `sessions` provides minimalist Go sessions, backed by `securecookie` or database stores.
 
 ### Features
 
 * `Store` provides a predicatable interface for dealing with *individual* sessions.
-    * `New` returns a new named `Session`. 
+    * `New` returns a new named `Session`.
     * `Get` returns the named `Session` from the `http.Request` iff it was correctly verified and decoded. Otherwise the error is non-nil.
     * `Save` encodes and signs Session.Value data.
     * `Destroy` removes (expires) the session cookie of a given name.

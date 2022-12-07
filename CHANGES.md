@@ -4,6 +4,10 @@ Notable changes between releases.
 
 ## Latest
 
+## v0.2.1
+
+* Update minimum Go version from v1.17 to v1.18 ([#15](https://github.com/dghubble/sessions/pull/15))
+
 ## v0.2.0
 
 * Fix `go.mod` to include `gorilla/securecookie` ([#7](https://github.com/dghubble/sessions/pull/7))

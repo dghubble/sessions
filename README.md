@@ -4,7 +4,7 @@ Package `sessions` provides minimalist Go sessions, backed by `securecookie` or 
 
 ### Features
 
-* `Store` provides a predicatable interface for dealing with *individual* sessions.
+* `Store` provides an interface for managing sessions.
     * `New` returns a new named `Session`.
     * `Get` returns the named `Session` from the `http.Request` iff it was correctly verified and decoded. Otherwise the error is non-nil.
     * `Save` encodes and signs Session.Value data.
@@ -22,6 +22,83 @@ go get github.com/dghubble/sessions
 ## Documentation
 
 Read [GoDoc](https://godoc.org/github.com/dghubble/sessions)
+
+## Usage
+
+Create a `Store` for managing `Session`'s. `NewCookieStore` returns a `Store` that signs and optionally encrypts cookies to support user sessions.
+
+```go
+import (
+  "github.com/dghubble/sessions"
+)
+
+func NewServer() (http.Handler) {
+  ...
+  // client-side cookies
+  sessionProvider := sessions.NewCookieStore(
+    // use a 32 byte or 64 byte hash key
+    []byte("signing-secret"),
+    // use a 32 byte (AES-256) encryption key
+    []byte("encryption-secret")
+  )
+  sessionProvider.Config.SameSite = http.SameSiteStrictMode
+  ...
+}
+```
+
+Issue a session cookie from a handler (e.g. login handler).
+
+```go
+func (s server) Login() http.Handler {
+  fn := func(w http.ResponseWriter, req *http.Request) {
+    // create a session
+    session := s.sessions.New("my-app")
+    // add user-id to session
+    session.Values["user-id"] = 123
+    // save the session to the response
+    if err := session.Save(w); err != nil {
+      // handle error
+    }
+    ...
+  }
+  return http.HandlerFunc(fn)
+}
+```
+
+Access the session and its values (e.g. require authentication).
+
+```go
+func (s server) RequireLogin() http.Handler {
+  fn := func(w http.ResponseWriter, req *http.Request) {
+    session, err := s.sessions.Get("my-app")
+    if err != nil {
+      http.Error(w, "missing session", http.StatusUnauthorized)
+      return
+    }
+
+    userID := session.Values("user-id")
+    fmt.Fprintf(w, `<p>Welcome %d!</p>
+    <form action="/logout" method="post">
+    <input type="submit" value="Logout">
+    </form>`, userID)
+  }
+  return http.HandlerFunc(fn)
+}
+```
+
+Delete a session when a user logs out.
+
+```go
+func (s server) Logout() http.Handler {
+  fn := func(w http.ResponseWriter, req *http.Request) {
+    if req.Method == "POST" {
+      s.sessions.Destroy(w, "my-app")
+    }
+    http.Redirect(w, req, "/", http.StatusFound)
+  }
+  return http.HandlerFunc(fn)
+}
+```
 
 ### Differences from gorilla/sessions
 

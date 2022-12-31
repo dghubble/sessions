@@ -8,30 +8,13 @@ const (
 	defaultMaxAge = 3600 * 24 * 7 // 1 week
 )
 
-// Config is the set of cookie properties.
-type Config struct {
-	// cookie domain/path scope (leave zeroed for requested resource scope)
-	Domain string
-	Path   string
-	// MaxAge=0 means no 'Max-Age' attribute specified.
-	// MaxAge<0 means delete cookie now, equivalently 'Max-Age: 0'.
-	// MaxAge>0 means Max-Age attribute present and given in seconds.
-	MaxAge int
-	// browser should prohibit non-HTTP (i.e. javascript) cookie access
-	HTTPOnly bool
-	// cookie may only be transferred over HTTPS
-	Secure bool
-	// prohibit sending in cross-site requests with SameSiteLaxMode or SameSiteLaxMode
-	SameSite http.SameSite
-}
-
 // Session represents Values state which  a named bundle of maintained web state
 // stores web session state
 type Session struct {
-	name   string  // session cookie name
-	Config *Config // session cookie config
-	store  Store   // session store
+	name   string // session cookie name
 	Values map[string]interface{}
+	// convenience methods Save and Destroy use store
+	store Store
 }
 
 // NewSession returns a new Session.

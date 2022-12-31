@@ -4,6 +4,8 @@ Notable changes between releases.
 
 ## Latest
 
+* Remove cookie `Config` field from `Session` ([#17](https://github.com/dghubble/sessions/pull/17))
+
 ## v0.2.1
 
 * Update minimum Go version from v1.17 to v1.18 ([#15](https://github.com/dghubble/sessions/pull/15))

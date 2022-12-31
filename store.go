@@ -1,9 +1,9 @@
 package sessions
 
 import (
-	"github.com/gorilla/securecookie"
 	"net/http"
-	"time"
+
+	"github.com/gorilla/securecookie"
 )
 
 // Store is the interface for creating, reading, updating and destroying
@@ -40,10 +40,7 @@ func NewCookieStore(keyPairs ...[]byte) *CookieStore {
 // New returns a new Session with the requested name and the store's config
 // value.
 func (s *CookieStore) New(name string) *Session {
-	session := NewSession(s, name)
-	config := *s.Config
-	session.Config = &config
-	return session
+	return NewSession(s, name)
 }
 
 // Get returns the named Session from the Request. Returns an error if the
@@ -66,7 +63,7 @@ func (s *CookieStore) Save(w http.ResponseWriter, session *Session) error {
 	if err != nil {
 		return err
 	}
-	http.SetCookie(w, newCookie(session.Name(), cookieValue, session.Config))
+	http.SetCookie(w, newCookie(session.Name(), cookieValue, s.Config))
 	return nil
 }
 
@@ -74,37 +71,4 @@ func (s *CookieStore) Save(w http.ResponseWriter, session *Session) error {
 // session cookie with the same name.
 func (s *CookieStore) Destroy(w http.ResponseWriter, name string) {
 	http.SetCookie(w, newCookie(name, "", &Config{MaxAge: -1, Path: s.Config.Path}))
-}
-
-// newCookie returns a new http.Cookie with the given name, value, and
-// properties from config.
-func newCookie(name, value string, config *Config) *http.Cookie {
-	cookie := &http.Cookie{
-		Name:     name,
-		Value:    value,
-		Domain:   config.Domain,
-		Path:     config.Path,
-		MaxAge:   config.MaxAge,
-		HttpOnly: config.HTTPOnly,
-		Secure:   config.Secure,
-		SameSite: config.SameSite,
-	}
-	// IE <9 does not understand MaxAge, set Expires based on MaxAge
-	if expires, present := cookieExpires(config.MaxAge); present {
-		cookie.Expires = expires
-	}
-	return cookie
-}
-
-// cookieExpires takes the MaxAge number of seconds a Cookie should be valid
-// and returns the Expires time.Time and whether the attribtue should be set.
-// http://golang.org/src/net/http/cookie.go?s=618:801#L23
-func cookieExpires(maxAge int) (time.Time, bool) {
-	if maxAge > 0 {
-		d := time.Duration(maxAge) * time.Second
-		return time.Now().Add(d), true
-	} else if maxAge < 0 {
-		return time.Unix(1, 0), true // first second of the epoch
-	}
-	return time.Time{}, false
 }

@@ -50,7 +50,7 @@ func (s *CookieStore) Get(req *http.Request, name string) (session *Session, err
 	cookie, err := req.Cookie(name)
 	if err == nil {
 		session = s.New(name)
-		err = securecookie.DecodeMulti(name, cookie.Value, &session.Values, s.Codecs...)
+		err = securecookie.DecodeMulti(name, cookie.Value, &session.values, s.Codecs...)
 	}
 	return session, err
 }
@@ -59,7 +59,7 @@ func (s *CookieStore) Get(req *http.Request, name string) (session *Session, err
 // encrypted session cookie. Session Values are encoded into the cookie value
 // and the session Config sets cookie properties.
 func (s *CookieStore) Save(w http.ResponseWriter, session *Session) error {
-	cookieValue, err := securecookie.EncodeMulti(session.Name(), &session.Values, s.Codecs...)
+	cookieValue, err := securecookie.EncodeMulti(session.Name(), &session.values, s.Codecs...)
 	if err != nil {
 		return err
 	}

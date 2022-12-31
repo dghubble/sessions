@@ -8,11 +8,10 @@ const (
 	defaultMaxAge = 3600 * 24 * 7 // 1 week
 )
 
-// Session represents Values state which  a named bundle of maintained web state
-// stores web session state
+// Session represents state values maintained in a sessions Store.
 type Session struct {
-	name   string // session cookie name
-	Values map[string]interface{}
+	name   string
+	values map[string]any
 	// convenience methods Save and Destroy use store
 	store Store
 }
@@ -20,15 +19,31 @@ type Session struct {
 // NewSession returns a new Session.
 func NewSession(store Store, name string) *Session {
 	return &Session{
-		store:  store,
 		name:   name,
-		Values: make(map[string]interface{}),
+		values: make(map[string]any),
+		store:  store,
 	}
 }
 
 // Name returns the name of the session.
 func (s *Session) Name() string {
 	return s.name
+}
+
+// Set sets a key/value pair in the session state.
+func (s *Session) Set(key string, value any) {
+	s.values[key] = value
+}
+
+// Get returns the state value for the given key.
+func (s *Session) Get(key string) any {
+	return s.values[key]
+}
+
+// GetOk returns the state value for the given key and whether they key exists.
+func (s *Session) GetOk(key string) (any, bool) {
+	value, ok := s.values[key]
+	return value, ok
 }
 
 // Save adds or updates the session. Identical to calling

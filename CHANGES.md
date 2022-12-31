@@ -4,6 +4,11 @@ Notable changes between releases.
 
 ## Latest
 
+* Change the `Session` field `Values` to be non-exported ([#18](https://github.com/dghubble/sessions/pull/18))
+  * Add `Session` `Set` method to set a key/value pair
+  * Add `Session` `Get` method to get a value for a given key
+  * Add `Session` `GetOk` to get a value for a given key and whether
+the key exists in the map
 * Remove cookie `Config` field from `Session` ([#17](https://github.com/dghubble/sessions/pull/17))
 
 ## v0.2.1

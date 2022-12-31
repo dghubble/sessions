@@ -54,7 +54,7 @@ func (s server) Login() http.Handler {
     // create a session
     session := s.sessions.New("my-app")
     // add user-id to session
-    session.Values["user-id"] = 123
+    session.Set("user-id", 123)
     // save the session to the response
     if err := session.Save(w); err != nil {
       // handle error
@@ -76,7 +76,7 @@ func (s server) RequireLogin() http.Handler {
       return
     }
 
-    userID := session.Values("user-id")
+    userID := session.Get("user-id")
     fmt.Fprintf(w, `<p>Welcome %d!</p>
     <form action="/logout" method="post">
     <input type="submit" value="Logout">

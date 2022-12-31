@@ -4,6 +4,8 @@
 [![Sponsors](https://img.shields.io/github/sponsors/dghubble?logo=github)](https://github.com/sponsors/dghubble)
 [![Mastodon](https://img.shields.io/badge/follow-news-6364ff?logo=mastodon)](https://fosstodon.org/@dghubble)
 
+<img align="right" src="https://storage.googleapis.com/dghubble/small-gopher-with-cookie.png">
+
 Package `sessions` provides minimalist Go sessions, backed by `securecookie` or database stores.
 
 ### Features

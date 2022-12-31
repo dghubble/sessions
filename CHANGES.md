@@ -4,6 +4,10 @@ Notable changes between releases.
 
 ## Latest
 
+* Change `CookieStore` and its fields to be non-exported ([#19](https://github.com/dghubble/sessions/pull/19))
+  * Change `NewCookieStore` to require a `*CookieConfig` and return a `Store`
+  * Rename `Config` struct to `CookieConfig`
+  * Add `DefaultCookieConfig` and `DebugCookieConfig` convenience variables
 * Change the `Session` field `Values` to be non-exported ([#18](https://github.com/dghubble/sessions/pull/18))
   * Add `Session` `Set` method to set a key/value pair
   * Add `Session` `Get` method to get a value for a given key

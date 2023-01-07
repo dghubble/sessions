@@ -11,7 +11,7 @@ var DefaultCookieConfig = &CookieConfig{
 	MaxAge:   defaultMaxAge,
 	HTTPOnly: true,
 	Secure:   true,
-	SameSite: http.SameSiteStrictMode,
+	SameSite: http.SameSiteLaxMode,
 }
 
 // DebugCookieConfig configures http.Cookie creation for debugging. It

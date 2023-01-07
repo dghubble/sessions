@@ -4,6 +4,10 @@ Notable changes between releases.
 
 ## Latest
 
+## v0.3.1
+
+* Change `DefaultCookieConfig` to use `SameSiteLaxMode` ([#22](https://github.com/dghubble/sessions/pull/22))
+
 ## v0.3.0
 
 * Change `CookieStore` and its fields to be non-exported ([#19](https://github.com/dghubble/sessions/pull/19))

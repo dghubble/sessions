@@ -4,6 +4,16 @@ Notable changes between releases.
 
 ## Latest
 
+## v0.4.0
+
+* Allow `Session` to store values with specified type (`V`) (i.e. generics) ([#21](https://github.com/dghubble/sessions/pull/21))
+  * `Session` state is now a `map[string]V` instead of a `map[string]any`
+  * Update `Set`, `Get`, and `GetOk` methods to use generic type `V`
+  * Change `Session` to `Session[V any]` to specify the type of value stored in the Session
+  * See updated usage docs for examples
+* Change `Store` to `Store[V any]` to specify the type of value stored in sessions
+* Change `NewCookieStore` to `NewCookieStore[V any]` to specify the type of value stored in sessions
+
 ## v0.3.1
 
 * Change `DefaultCookieConfig` to use `SameSiteLaxMode` ([#22](https://github.com/dghubble/sessions/pull/22))

@@ -9,51 +9,51 @@ const (
 )
 
 // Session represents state values maintained in a sessions Store.
-type Session[V any] struct {
+type Session struct {
 	name   string
-	values map[string]V
+	values map[string]any
 	// convenience methods Save and Destroy use store
-	store Store[V]
+	store Store
 }
 
 // NewSession returns a new Session.
-func NewSession[V any](store Store[V], name string) *Session[V] {
-	return &Session[V]{
+func NewSession(store Store, name string) *Session {
+	return &Session{
 		name:   name,
-		values: make(map[string]V),
+		values: make(map[string]any),
 		store:  store,
 	}
 }
 
 // Name returns the name of the session.
-func (s *Session[V]) Name() string {
+func (s *Session) Name() string {
 	return s.name
 }
 
 // Set sets a key/value pair in the session state.
-func (s *Session[V]) Set(key string, value V) {
+func (s *Session) Set(key string, value any) {
 	s.values[key] = value
 }
 
 // Get returns the state value for the given key.
-func (s *Session[V]) Get(key string) V {
+func (s *Session) Get(key string) any {
 	return s.values[key]
 }
 
 // GetOk returns the state value for the given key and whether they key exists.
-func (s *Session[V]) GetOk(key string) (V, bool) {
+func (s *Session) GetOk(key string) (any, bool) {
 	value, ok := s.values[key]
 	return value, ok
 }
 
 // Save adds or updates the session. Identical to calling
 // store.Save(w, session).
-func (s *Session[V]) Save(w http.ResponseWriter) error {
+func (s *Session) Save(w http.ResponseWriter) error {
 	return s.store.Save(w, s)
 }
 
 // Destroy destroys the session. Identical to calling
 // store.Destroy(w, session.name).
-func (s *Session[V]) Destroy(w http.ResponseWriter) {
+func (s *Session) Destroy(w http.ResponseWriter) {
 	s.store.Destroy(w, s.name)
 }

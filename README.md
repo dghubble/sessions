@@ -23,8 +23,6 @@ Read [GoDoc](https://godoc.org/github.com/dghubble/sessions)
 
 Create a `Store` for managing `Session`'s. `NewCookieStore` returns a `Store` that signs and optionally encrypts cookies to support user sessions.
 
-A `Session` stores a map of key/value pairs (e.g. "userID": "a1b2c3"). Starting with v0.4.0, `sessions` uses Go generics to allow specifying a type for stored values.Previously, values were type `interface{}` or `any`, which required type assertions.
-
 ```go
 import (
   "github.com/dghubble/sessions"
@@ -33,7 +31,7 @@ import (
 func NewServer() (http.Handler) {
   ...
   // client-side cookies
-  store := sessions.NewCookieStore[string](
+  sessionProvider := sessions.NewCookieStore(
     sessions.DefaultCookieConfig,
     // use a 32 byte or 64 byte hash key
     []byte("signing-secret"),
@@ -41,7 +39,6 @@ func NewServer() (http.Handler) {
     []byte("encryption-secret")
   )
   ...
-  server.sessions = store
 }
 ```
 
@@ -53,7 +50,7 @@ func (s server) Login() http.Handler {
     // create a session
     session := s.sessions.New("my-app")
     // add user-id to session
-    session.Set("user-id", "a1b2c3")
+    session.Set("user-id", 123)
     // save the session to the response
     if err := session.Save(w); err != nil {
       // handle error
@@ -75,12 +72,7 @@ func (s server) RequireLogin() http.Handler {
       return
     }
 
-    userID, present := session.GetOk("user-id")
-    if !present {
-      http.Error(w, "missing user-id", http.StatusUnauthorized)
-      return
-    }
-
+    userID := session.Get("user-id")
     fmt.Fprintf(w, `<p>Welcome %d!</p>
     <form action="/logout" method="post">
     <input type="submit" value="Logout">

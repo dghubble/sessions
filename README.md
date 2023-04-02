@@ -14,7 +14,7 @@ Package `sessions` provides minimalist Go sessions, backed by `securecookie` or 
     * May be implemented by custom session database backends
 * `Session` stores a typed value (via generics)
 * `Session` provides convenient key/value `Set`, `Get`, and `GetOk` methods
-* `NewCookeiStore` implements a `Store` backed by client-side cookies (signed and optionally encrypted)
+* `NewCookieStore` implements a `Store` backed by client-side cookies (signed and optionally encrypted)
 
 ## Docs
 

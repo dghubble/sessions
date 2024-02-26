@@ -4,6 +4,10 @@ Notable changes between releases.
 
 ## Latest
 
+## v0.4.1
+
+* Update Go module dependency and configure changelog generator
+
 ## v0.4.0
 
 * Allow `Session` to store values with specified type (`V`) (i.e. generics) ([#21](https://github.com/dghubble/sessions/pull/21))
